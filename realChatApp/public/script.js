@@ -1,19 +1,19 @@
 const sendButton = document.querySelector("#send-chat");
 const chatMessage = document.querySelector("#chat-message");
 const chatList = document.querySelector(".chat-list");
-
+const onlineBox = document.querySelector(".online-box");
 let userName = prompt("Enter Your Name");
-
 if(userName){
-    socket.emit( "join", userName);
+    socket.emit("join", userName);
 }
+
+socket.emit("online", userName);
 
 chatMessage.addEventListener("keyup", function(e){
     if(e.keyCode == 13){
         sendButton.click();
     }
 });
-
 sendButton.addEventListener("click", function(){
     let message = chatMessage.value;
     if( message){

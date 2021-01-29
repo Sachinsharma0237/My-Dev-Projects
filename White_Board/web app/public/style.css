@@ -221,10 +221,14 @@ height: 20px;
     width: 45px; 
 }
 #shapeOptions{
-    top: 80px;
+    top: 70px;
     background: lightgray;
-    left: 663px;
-    height: 52px;
+    left: -46px;
+    height: 53px;
+}
+#shape{
+    
+position: relative;
 }
 .myShape{
     display: flex;
@@ -233,14 +237,6 @@ height: 20px;
     height: 40px;
     width: 40px;
 }
-
-
-
-
-
-
-
-
 /*  Hide and Active*/
 .active-tool{
     background: darkgray;
