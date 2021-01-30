@@ -12,9 +12,9 @@ io.on('connection', function (socket) {
     users.push({ id: socket.id });
     console.log("my users--");
     console.log(users);
-    socket.on("online", function(userName){
-        socket.broadcast.emit("online-users", userName);
-    });
+    // socket.on("online", function(userName){
+    //     socket.broadcast.emit("online-users", userName);
+    // });
     socket.on("join", function (userName) {
         for (let i = 0; i < users.length; i++) {
             if (users[i].id == socket.id) {
@@ -22,6 +22,7 @@ io.on('connection', function (socket) {
                 break;
             }
         }
+        socket.emit("online-list" , users);
         socket.broadcast.emit("chat-join", userName);
     });
     socket.on("chat", function (message) {
@@ -43,6 +44,7 @@ io.on('connection', function (socket) {
                 break;
             }
         }
+        socket.broadcast.emit("offline" , socket.id);
         socket.broadcast.emit("leave", name);
         users.slice(idx, 1);
     });

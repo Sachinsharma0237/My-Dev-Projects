@@ -16,12 +16,14 @@ corner.addEventListener("click", function () {
         }
     } else { 
         ctx.lineCap = lastCornerStyle;
-        if(!pencilOptions.classList.contains("hide") || !eraserOptions.classList.contains("hide")){
+        if(!pencilOptions.classList.contains("hide") || !eraserOptions.classList.contains("hide")|| !shapeOptions.classList.contains("hide")){
             pencilOptions.classList.add("hide");
             eraserOptions.classList.add("hide");
+            shapeOptions.classList.add("hide");        
         }
         pencil.classList.remove("active-tool");
         eraser.classList.remove("active-tool");
+        shape.classList.remove("active-tool");
         corner.classList.add("active-tool");
     }
 });

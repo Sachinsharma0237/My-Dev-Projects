@@ -5,6 +5,11 @@ socket.on("chat-join", function(userName){
         chatList.append(chat);
 });
 
+socket.on("offline" , function(sid){
+    let offlineUser = document.querySelector(`div[sid=${sid}]`);
+    offlineUser.remove();
+})
+
 socket.on("chat-left", function(messageObj){
     let chat = document.createElement("div");
         chat.classList.add("chat");
