@@ -20,7 +20,10 @@ function changeImages(){
   }
 }
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    changeImages();
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    console.log("request", message);
+    if(message == "changeImage"){
+      changeImages();
+    }
     sendResponse("Image has been changed");
 });
