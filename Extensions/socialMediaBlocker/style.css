@@ -26,3 +26,19 @@
     position: absolute;
     right: 10px;
 }
+.time{
+    max-width: 30px;
+    max-height: 50px;
+    margin: 5px;
+}
+.remain{
+    margin: 15px;
+    background: orange;
+    color: white;
+    font-weight: bolder;
+    min-width: 30px;
+    min-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
