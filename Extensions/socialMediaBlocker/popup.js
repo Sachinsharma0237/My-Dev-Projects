@@ -52,7 +52,16 @@ block.addEventListener("click", function(){
     let site = input.value;
     let time = second.value;
     if(site){
+        for(let i = 0; i < localBlockList.length; i++){
+            if(localBlockList[i].site.includes(site) || site.includes(localBlockList[i].site)){
+                alert("Site Already Blocked");
+                input.value = "";
+                second.value = "";
+                return;
+            }
+        }
         addBlockSitesToUi(site, time);
+        localBlockList.push({site, time})
         input.value = "";
         second.value = "";
     }
