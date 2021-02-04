@@ -72,11 +72,11 @@ function redraw(){
             let lineObj = line[j];
             ctx.lineWidth = lineObj.width;
             ctx.strokeStyle = lineObj.color;
+            ctx.lineCap = lineObj.corner;
             if(lineObj.id == 'md'){
                 ctx.beginPath();
                 ctx.moveTo(lineObj.x, lineObj.y);
             }else{
-                ctx.lineCap = corner;
                 ctx.lineTo(lineObj.x, lineObj.y);
                 ctx.stroke();
             }

@@ -49,6 +49,7 @@ socket.on("redosocket", function(redoLine){
         let lineObj = redoLine[i];
         ctx.lineWidth = lineObj.width;
         ctx.strokeStyle = lineObj.color;
+        ctx.lineCap = lineObj.corner;
         if(lineObj.id == 'md'){
             ctx.beginPath();
             ctx.moveTo(lineObj.x, lineObj.y);
@@ -88,6 +89,7 @@ function redrawSocket(socketDb){
             let lineObj = line[j];
             ctx.strokeStyle = lineObj.color;
             ctx.lineWidth = lineObj.width;
+            ctx.lineCap = lineObj.corner;
             if(lineObj.id == "md"){
                 ctx.beginPath();
                 ctx.moveTo(lineObj.x, lineObj.y);

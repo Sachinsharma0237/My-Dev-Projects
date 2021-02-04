@@ -21,7 +21,6 @@ const trash = document.querySelector("#trash");
 //-------------------------------------------------Pencil and Eraser Size----------------------------------------------------------------------
 let lastPencilSize = 1;
 let lastEraserSize = 1;
-
 pencilSize.addEventListener("change", function(){
     lastPencilSize = pencilSize.value;
     ctx.lineWidth = lastPencilSize;
@@ -31,6 +30,7 @@ eraserSize.addEventListener("change", function(){
     lastEraserSize = eraserSize.value;
     ctx.lineWidth = lastEraserSize;
 });
+
 //---------------------------------------------------------------------------------------------------------------------------------------------
 
 pencil.addEventListener("click", function(){
@@ -131,6 +131,7 @@ redo.addEventListener("click", function(){
             let lineObj = redoLine[i];
             ctx.lineWidth = lineObj.width;
             ctx.strokeStyle = lineObj.color;
+            ctx.lineCap = lineObj.corner;
             if(lineObj.id == 'md'){
                 ctx.beginPath();
                 ctx.moveTo(lineObj.x, lineObj.y);
