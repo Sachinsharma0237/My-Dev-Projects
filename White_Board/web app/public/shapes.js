@@ -5,7 +5,7 @@ const circleShape = document.querySelector(".circleShape");
 const squareShape = document.querySelector(".squareShape");
 const ovalShape = document.querySelector(".ovalShape");
 const triangleShape = document.querySelector(".triangleShape");
-
+const circleInput = document.querySelector("#circle-input");
 shape.addEventListener("click", function(){
     if (shape.classList.contains("active-tool")) {
         if (shapeOptions.classList.contains("hide")) {
@@ -28,27 +28,32 @@ shape.addEventListener("click", function(){
 });
 
 circleShape.addEventListener("click", function(){
+    let rad = circleInput.value;
     ctx.beginPath();
-    ctx.lineWidth = "2";
-    ctx.arc(100, 200, 40, 0, 2 * Math.PI);
+    ctx.lineWidth = "1";
+    ctx.arc(500, 200, rad, 0, 2 * Math.PI);
     ctx.stroke();
 });
 squareShape.addEventListener("click", function(){
+    let side = circleInput.value;
     ctx.strokeStyle = "black";
-    ctx.lineWidth = "2";
-    ctx.strokeRect(10, 100, 180, 180);
+    ctx.lineWidth = "1";
+    ctx.strokeRect(700, 100, side, side);
 });
 ovalShape.addEventListener("click", function(){
+    let side = circleInput.value;
     ctx.beginPath();
-    ctx.ellipse(100, 100, 50, 75, Math.PI / 4, 0, 2 * Math.PI);
+    ctx.ellipse(150, 400, 50, side, Math.PI / 4, 0, 2 * Math.PI);
     ctx.stroke();
 });
 triangleShape.addEventListener("click", function(){
+    let side = circleInput.value;
     ctx.beginPath();
-    ctx.moveTo(75, 50);
-    ctx.lineTo(100, 75);
-    ctx.lineTo(100, 25);
-    ctx.fill();
+    ctx.moveTo(100, 100);
+    ctx.lineTo(100, 200);
+    ctx.lineTo(200, side);
+    ctx.lineTo(100, 100);
+    ctx.stroke();
 });
 
 
