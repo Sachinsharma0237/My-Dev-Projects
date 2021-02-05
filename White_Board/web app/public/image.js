@@ -1,6 +1,7 @@
 const photo = document.querySelector("#photo");
 const imgUpload = document.querySelector("#photo-upload");
 const download = document.querySelector("#download");
+const printer = document.querySelector("#printer");
 
 photo.addEventListener("click", function(){
     clickSound();
@@ -23,4 +24,10 @@ imgUpload.addEventListener("change", function(e){
     img.setAttribute("src", src);
     let stickyContent = createSticky();
     stickyContent.append(img);
+});
+
+
+
+printer.addEventListener("click", function(){
+    window.print();
 });

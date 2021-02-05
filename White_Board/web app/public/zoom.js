@@ -3,11 +3,10 @@ const zoomOut = document.querySelector("#zoom-out");
 
 zoomIn.addEventListener("click", function(){
     clickSound();
-    console.log("hello zoomIn");
     zoomin();
 })
 zoomOut.addEventListener("click", function(){
-    console.log("hello zoomOut");
+    clickSound();
     zoomout();
 })
 

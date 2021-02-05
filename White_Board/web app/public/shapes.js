@@ -59,6 +59,6 @@ triangleShape.addEventListener("click", function(){
 
 
 function clickSound(){
-    const audio = new Audio("http://commondatastorage.googleapis.com/codeskulptor-assets/week7-button.m4a");
+    const audio = new Audio("http://commondatastorage.googleapis.com/codeskulptor-demos/pyman_assets/eatpellet.ogg");
     audio.play();
 }

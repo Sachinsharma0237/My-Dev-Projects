@@ -250,9 +250,9 @@ height: 20px;
     justify-content: center;
     text-align: center;
     left: -34px;
-    border-radius: 8px;
+    border-radius: 3px;
     margin: 5px;
-    border: 2px solid lightgreen;
+    border: 1px solid lightgray;
     top: 14px;
     background: transparent;
 }
@@ -295,11 +295,11 @@ height: 20px;
 
 /*  Hide and Active*/
 .active-tool{
-    background: darkgray;
+    background: repeating-linear-gradient(218deg, black, transparent 75px);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 100%;
+    border-radius: 47%;
     padding: 4px;
     height: 60px;
     width: 55px;
