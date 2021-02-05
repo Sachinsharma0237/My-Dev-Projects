@@ -7,6 +7,7 @@ const ovalShape = document.querySelector(".ovalShape");
 const triangleShape = document.querySelector(".triangleShape");
 const circleInput = document.querySelector("#circle-input");
 shape.addEventListener("click", function(){
+    clickSound();
     if (shape.classList.contains("active-tool")) {
         if (shapeOptions.classList.contains("hide")) {
             shapeOptions.classList.remove("hide");
@@ -57,3 +58,7 @@ triangleShape.addEventListener("click", function(){
 });
 
 
+function clickSound(){
+    const audio = new Audio("http://commondatastorage.googleapis.com/codeskulptor-assets/week7-button.m4a");
+    audio.play();
+}

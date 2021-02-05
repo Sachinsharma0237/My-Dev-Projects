@@ -3,10 +3,12 @@ const imgUpload = document.querySelector("#photo-upload");
 const download = document.querySelector("#download");
 
 photo.addEventListener("click", function(){
+    clickSound();
     imgUpload.click();
 });
 
 download.addEventListener("click", function(){
+    clickSound();
     let image = canvas.toDataURL("image/jpeg");
     let aTag = document.createElement("a");
     aTag.download = "canvas.jpeg";

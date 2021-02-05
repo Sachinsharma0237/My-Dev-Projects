@@ -34,6 +34,7 @@ eraserSize.addEventListener("change", function(){
 //---------------------------------------------------------------------------------------------------------------------------------------------
 
 pencil.addEventListener("click", function(){
+    clickSound();
     if(pencil.classList.contains("active-tool")){
         //options kholunga
         if(pencilOptions.classList.contains("hide")){
@@ -58,8 +59,8 @@ pencil.addEventListener("click", function(){
     }
 
 });
-
 eraser.addEventListener("click", function(){
+    clickSound();
     if(eraser.classList.contains("active-tool")){
 
         if(eraserOptions.classList.contains("hide")){
@@ -113,6 +114,7 @@ brown.addEventListener("click", function(){
 //----------------------------------------------------------------------------------------------------------------------------------------------
 
 undo.addEventListener("click", function(){
+    clickSound();
     if( db.length > 0 ){
         let undoLine = db.pop();
         redoDb.push(undoLine);
@@ -123,6 +125,7 @@ undo.addEventListener("click", function(){
 });
 
 redo.addEventListener("click", function(){
+    clickSound();
     if(redoDb.length > 0){
         let redoLine = redoDb.pop();
         socket.emit("redoclick", redoLine);
@@ -145,6 +148,7 @@ redo.addEventListener("click", function(){
 
 //-----------------Trash bin--------------------------------------------------------
 trash.addEventListener("click", function(){
+    clickSound();
     db = [];
     redoDb = [];
     line = [];

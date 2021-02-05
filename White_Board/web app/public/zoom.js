@@ -2,6 +2,7 @@ const zoomIn = document.querySelector("#zoom-in");
 const zoomOut = document.querySelector("#zoom-out");
 
 zoomIn.addEventListener("click", function(){
+    clickSound();
     console.log("hello zoomIn");
     zoomin();
 })

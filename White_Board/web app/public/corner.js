@@ -7,6 +7,7 @@ const butt = document.querySelector(".butt");
 
 let lastCornerStyle = "round";
 corner.addEventListener("click", function () {
+         clickSound();
     if (corner.classList.contains("active-tool")) {
         if (cornerOptions.classList.contains("hide")) {
             cornerOptions.classList.remove("hide");
