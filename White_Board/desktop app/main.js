@@ -9,10 +9,10 @@ const win = new BrowserWindow({
       enableRemoteModule:true
     }
   });
-
+  win.removeMenu();
   win.loadFile('index.html').then(function(){
-      win.maximize();
-      win.webContents.openDevTools();
+  win.maximize();
+      //win.webContents.openDevTools();
   })
 }
 

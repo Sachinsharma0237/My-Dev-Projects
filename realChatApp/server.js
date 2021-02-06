@@ -9,19 +9,16 @@ app.use(express.static("public"));
 
 io.on('connection', function (socket) {
     console.log(`connected at socket ${socket.id}`);
-    users.push({ id: socket.id });
-    console.log("my users--");
-    console.log(users);
-    // socket.on("online", function(userName){
-    //     socket.broadcast.emit("online-users", userName);
-    // });
     socket.on("join", function (userName) {
+        console.log("my users--");
         for (let i = 0; i < users.length; i++) {
             if (users[i].id == socket.id) {
                 users[i].userName = userName;
                 break;
             }
         }
+        users.push({ id: socket.id, userName : userName });
+        console.log(users);
         socket.emit("online-list" , users);
         socket.broadcast.emit("chat-join", userName);
     });
@@ -41,7 +38,7 @@ io.on('connection', function (socket) {
             if (users[i].id == socket.id) {
                 idx = i;
                 name = users[i].userName;
-                break;
+                break; 
             }
         }
         socket.broadcast.emit("offline" , socket.id);

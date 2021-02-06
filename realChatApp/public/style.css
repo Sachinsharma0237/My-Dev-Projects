@@ -31,8 +31,8 @@
     width: 94%;
     border-radius: 12px;
     color: orange;
-    background: green;
-    padding: 10px;
+    background: black;
+    padding: 9px;
     display: flex;
     position: relative;
     border: 1px solid;
@@ -44,8 +44,8 @@
     height: 46px;
     width: 81px;
     position: absolute;
-    top: 2px;
-    left: 169px;
+    top: 0px;
+    left: 234px;
     z-index: 2;
     display: flex;
 }

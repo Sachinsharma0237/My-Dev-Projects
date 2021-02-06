@@ -3,6 +3,10 @@ socket.on("chat-join", function(userName){
         chat.classList.add("join");
         chat.innerHTML = userName + " joined the chat !";
         chatList.append(chat);
+    let user = document.createElement("div");
+        user.classList.add("online");
+        user.innerHTML = userName;
+        onlineBox.append(user);
 });
 
 socket.on("offline" , function(sid){
@@ -23,15 +27,13 @@ socket.on("leave", function(userName){
         chat.innerHTML = userName + " left the chat !";
         chatList.append(chat);
 });
-let x = 0;
-socket.on("online-users", function(userName, x){
-     let user = document.createElement("div");
-         user.classList.add("online");
-         user.innerHTML = userName;
-         onlineBox.append(user);
-     let green = document.createElement("span");
-         green.classList.add("logged-in");
-         green.style.top = "107px" + x;
-         green.innerHTML = "●";
-         user.append(green);
+socket.on("online-list", function(users){
+    console.log(users);
+    for(let i = 0; i < users.length; i++){
+        let user = document.createElement("div");
+            user.classList.add("online");
+            user.innerHTML = users[i].userName;
+            user.setAttribute("sid", users[i].id);
+            onlineBox.append(user);
+    }
 });

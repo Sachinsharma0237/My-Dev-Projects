@@ -5,9 +5,7 @@ const onlineBox = document.querySelector(".online-box");
 let userName = prompt("Enter Your Name");
 if(userName){
     socket.emit("join", userName);
-    // socket.emit("online", userName);
 }
-
 
 chatMessage.addEventListener("keyup", function(e){
     if(e.keyCode == 13){
