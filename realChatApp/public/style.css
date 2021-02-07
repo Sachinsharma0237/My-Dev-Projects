@@ -4,8 +4,20 @@
   padding: 0px;
   font-family: "Londrina Solid", cursive;
 }
+.heading{
+    font-family: 'Pacifico', cursive;
+    display: flex;
+    height: 10vh;
+    background: darkorange;
+    justify-content: center;
+    align-items: center;
+}
+.chat-bubble{
+    height: 47px;
+    width: 68px;
+}
 .content {
-  height: 100vh;
+  height: 90vh;
   width: 100vw;
   background: #7563e0;
   display: flex;
@@ -13,8 +25,8 @@
   align-items: center;
 }
 .chat-box {
-  height: 80%;
-  width: 80%;
+  height: 91%;
+  width: 91%;
   background: #312c40;
   border-radius: 10px;
   display: flex;
@@ -82,19 +94,20 @@
   font-size: 49px;
 }
 .right-view {
-  width: 70%;
-  height: 100%;
-  background: #2d2839;
-  border-top-right-radius: 10px;
-  position: relative;
-  display: flex;
-  justify-content: center;
+    width: 70%;
+    height: 100%;
+    background: #2d2839;
+    border-top-right-radius: 10px;
+    position: relative;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    justify-content: center;
 }
 
 .chat-list {
   width: 100%;
   overflow: auto;
-  height: 87%;
+  height: 85%;
 }
 .chat {
   min-height: 30px;
@@ -174,14 +187,14 @@
   justify-content: center;
 }
 .green {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  left: 201px;
-  font-size: 35px;
-  top: -13px;
-  align-items: end;
-  justify-content: center;
-  color: #7fff00;
-  text-align: end;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 237px;
+    font-size: 35px;
+    top: -11px;
+    align-items: end;
+    justify-content: center;
+    color: #7fff00;
+    text-align: end;
 }
