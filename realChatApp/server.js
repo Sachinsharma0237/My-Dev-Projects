@@ -9,8 +9,9 @@ app.use(express.static("public"));
 
 io.on('connection', function (socket) {
     console.log(`connected at socket ${socket.id}`);
+
     socket.on("join", function (userName) {
-        console.log("my users--");
+
         for (let i = 0; i < users.length; i++) {
             if (users[i].id == socket.id) {
                 users[i].userName = userName;
@@ -18,10 +19,11 @@ io.on('connection', function (socket) {
             }
         }
         users.push({ id: socket.id, userName : userName });
-        console.log(users);
+        socket.broadcast.emit("chat-join", { id: socket.id, userName : userName });
         socket.emit("online-list" , users);
-        socket.broadcast.emit("chat-join", userName);
     });
+
+
     socket.on("chat", function (message) {
         let userName;
         for (let i = 0; i < users.length; i++) {
@@ -31,6 +33,8 @@ io.on('connection', function (socket) {
         }
         socket.broadcast.emit("chat-left", { message, userName });
     });
+
+
     socket.on('disconnect', function () {
         let idx;
         let name;
@@ -43,9 +47,10 @@ io.on('connection', function (socket) {
         }
         socket.broadcast.emit("offline" , socket.id);
         socket.broadcast.emit("leave", name);
-        users.slice(idx, 1);
     });
 });
+
+
 
 
 let port = 3000;
