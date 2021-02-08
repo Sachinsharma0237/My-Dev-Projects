@@ -5,11 +5,12 @@
   font-family: "Londrina Solid", cursive;
 }
 .heading{
-    font-family: 'Pacifico', cursive;
+    font-family: 'Stalinist One', cursive;
     display: flex;
     height: 10vh;
-    background: darkorange;
+    background: #ffc107;
     justify-content: center;
+    color: black;
     align-items: center;
 }
 .chat-bubble{
@@ -40,27 +41,29 @@
   border-radius: 10px;
 }
 .online-heading {
-  font-size: 22px;
-  width: 94%;
-  border-radius: 12px;
-  color: orange;
-  background: black;
-  padding: 9px;
-  display: flex;
-  position: relative;
-  border: 1px solid;
-  align-items: center;
-  margin: 7px;
-  justify-content: stretch;
+    font-size: 26px;
+    width: 94%;
+    border-radius: 12px;
+    color: chartreuse;
+    background: black;
+    padding: 9px;
+    display: flex;
+    font-style: italic;
+    font-weight: bolder;
+    position: relative;
+    border: 1px solid;
+    align-items: center;
+    margin: 7px;
+    justify-content: stretch;
 }
 #tools {
-  height: 46px;
-  width: 81px;
-  /* position: absolute; */
-  top: 0px;
-  left: 234px;
-  z-index: 2;
-  display: flex;
+    height: 46px;
+    width: 81px;
+    position: absolute;
+    top: 0px;
+    left: 192px;
+    z-index: 2;
+    display: flex;
 }
 .online-box {
   display: flex;
@@ -71,7 +74,7 @@
   justify-content: center;
 }
 .online {
-  background: #251c3b;
+  background: black;
   color: white;
   min-width: 100%;
   border-radius: 13px;

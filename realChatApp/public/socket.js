@@ -6,7 +6,7 @@ socket.on("chat-join", function(users){
 
     let onlineUser = document.createElement("span");
         onlineUser.classList.add("online");
-        onlineUser.innerHTML = users.userName;
+        onlineUser.innerHTML =  "🗣  " + users.userName;
         onlineUser.setAttribute("sid", users.id); 
         onlineBox.append(onlineUser);
     let greenDot = document.createElement("span");
@@ -20,7 +20,7 @@ socket.on("online-list", function(users){
     for(let i = 0; i < users.length; i++){
         let onlineUser = document.createElement("span");
             onlineUser.classList.add("online");
-            onlineUser.innerHTML = users[i].userName;
+            onlineUser.innerHTML = "🗣  " + users[i].userName;
             onlineUser.setAttribute("sid", users[i].id);
             onlineBox.append(onlineUser);
         let greenDot = document.createElement("span");
