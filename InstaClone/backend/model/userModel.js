@@ -7,7 +7,8 @@ let userSchema = mongoose.Schema({
     },
     username:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     bio:{
         type:String,
@@ -15,7 +16,8 @@ let userSchema = mongoose.Schema({
     },
     email:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     password:{
         type:String,

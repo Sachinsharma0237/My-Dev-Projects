@@ -4,6 +4,8 @@ const app = express();
 
 
 
+app.use( express.json() );
+
 //for all user related functions navigate to userRouter
 app.use("/api/user", userRouter);
 
