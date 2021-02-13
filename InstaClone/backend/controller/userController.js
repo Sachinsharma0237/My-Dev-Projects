@@ -1,6 +1,5 @@
 const userModel = require("../model/userModel");
 
-
 async function createUser(req, res){  
     try{
         let userObject = req.body;
@@ -19,17 +18,78 @@ async function createUser(req, res){
         })
     }
 }
-function getAllUsers(req, res){
-    
+
+async function getAllUsers(req, res){
+    try{
+        let allUsers = await userModel.find({});
+        console.log(allUsers);
+        res.json({
+            message:"got all users",
+            allUsers
+        })
+    }
+    catch(error){
+        res.json({
+            message:"failed to get all users",
+        })
+    }
 }
-function getUserById(req, res){
+
+async function getUserById(req, res){
+    try{
+        let id = req.params.id;
+        let user = await userModel.findById(id);
+        res.json({
+            message:"successfully got user!",
+            user
+        })
+    }
+    catch(error){
+        res.json({
+            message:"failed to get user!!",
+            error
+        })
+    }
+}
+async function updateUserById(req, res){
+    try{
+        let id = req.params.id;
+        let updateObject = req.body;
+        let user = await userModel.findById(id);
+        
+        for(let key in updateObject){
+            user[key] = updateObject[key];
+        }
+        let updatedUser = await user.save();
+        console.log(updatedUser);
+        res.json({
+            message:"user updated Sucessfully",
+            updatedUser
+        })
+    }
+    catch(error){
+        res.json({
+            message:"failed to update user!!!",
+            error
+        })
+    }
 
 }
-function updateUserById(req, res){
-
-}
-function deleteUserById(req, res){
-
+async function deleteUserById(req, res){
+    try{
+        let id = req.params.id;
+         let deletedUser =  await userModel.findByIdAndDelete(id);
+         res.json({
+             message:"user deleted",
+             deletedUser
+         })
+    }
+    catch(error){
+        res.json({
+            message:"failed to delete",
+            error
+        })
+    }
 }
 
 
