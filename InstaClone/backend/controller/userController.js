@@ -3,12 +3,17 @@ const userModel = require("../model/userModel");
 async function createUser(req, res){  
     try{
         let userObject = req.body;
+        if(req.file){
+            let profilePicPath = req.file.destination.substring(6) + "/" + req.file.filename;
+            userObject.profilePic = profilePicPath;
+            console.log(userObject);
+        }     
         let userCreated = await userModel.create(userObject);
-        console.log(userCreated);
         res.json({
-            message:"user created!!!",
+            message:"user created Succesfully",
             userCreated
         })
+        
     }
     catch(error){
         console.log(error);
@@ -18,7 +23,6 @@ async function createUser(req, res){
         })
     }
 }
-
 async function getAllUsers(req, res){
     try{
         let allUsers = await userModel.find({});
@@ -34,7 +38,6 @@ async function getAllUsers(req, res){
         })
     }
 }
-
 async function getUserById(req, res){
     try{
         let id = req.params.id;
@@ -60,8 +63,11 @@ async function updateUserById(req, res){
         for(let key in updateObject){
             user[key] = updateObject[key];
         }
+        if(req.file){
+            let profilePicPath = req.file.destination.substring(6) + "/" + req.file.filename;
+            user.profilePic = profilePicPath;
+        } 
         let updatedUser = await user.save();
-        console.log(updatedUser);
         res.json({
             message:"user updated Sucessfully",
             updatedUser
