@@ -30,7 +30,7 @@ let userSchema = mongoose.Schema({
     },
     profilePic:{
         type:String,
-        default:"default.png"
+        default:"public/images/users/default.png"
     },
 })
 
