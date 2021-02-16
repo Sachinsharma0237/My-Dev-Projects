@@ -1,3 +1,4 @@
+/* CRUD ============>>>>>> Create Read Update Delete */ 
 const userModel = require("../model/userModel");
 
 async function createUser(req, res){  
