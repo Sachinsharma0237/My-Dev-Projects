@@ -83,13 +83,182 @@ async function pendingRequests(req, res) {
     }
     catch(error){
         res.json({
-            message:"failed To Get List"
+            message:"failed To Get List",
+            error
         })
 
     }
 }
 
+async function deleteRequest(req , res){
+    try{
+        let {uid} = req.params;
+        let { toBeDeleted } = req.body;
+        let request = await followingModel.find({uid:toBeDeleted, followId:uid, isAccepted:false}).exec();
+        if(request[0] != null){
+            let deletedRequest = await followingModel.deleteOne({uid:toBeDeleted, followId:uid, isAccepted:false});
+            res.json({
+                message:"request deleted!!!",
+                deletedRequest
+            })
+            // res.deletedCount
+        }else{
+            res.json({
+                message:"Request don't exist"
+            })
+        }
+    }
+    catch(error){
+        res.json({
+            message:"failed to delete request",
+            error
+        })
+    }
+    
+}
 
+async function cancelRequest(req , res){
+    try{
+        let {uid} = req.params;
+        let {toBeCanceled} = req.body;
+        let sentRequest = await followingModel.find({uid:uid, followId:toBeCanceled, isAccepted:false}).exec();
+        console.log(sentRequest);
+        if(sentRequest[0] != null){
+            let deletedRequest = await followingModel.deleteOne({uid:uid, followId:toBeCanceled, isAccepted:false});
+            res.json({
+                message:"request canceled",
+                deletedRequest
+            })
+        }else{
+            res.json({
+                message:"Request don't exist"
+            })
+        }
+    }
+    catch(error){
+
+    }
+
+
+}
+
+async function unfollow(req , res){
+    try{
+        let {uid} = req.params;
+        let {toBeUnfollowed} = req.body;
+        let unfollowUser = await followerModel.find({uid:uid, followerId:toBeUnfollowed}).exec();
+        console.log(unfollowUser);
+        if(unfollowUser[0] != null){
+            let unfollowedUser = await followerModel.deleteOne({uid:uid, followerId:toBeUnfollowed});
+            res.json({
+                message:"unfollowed user!!!",
+                unfollowedUser
+            })
+        }else{
+            res.json({
+                message:"User don't exist"
+            })
+        }
+    }
+    catch(error){
+
+    }
+
+}
+
+async function deleteFollower(req , res){
+    try{
+        let {uid, myFollower} = req.body;
+        let request = await followingModel.find({uid:myFollower, followId:uid, isAccepted:true}).exec();
+        console.log(request);
+        if(request[0] != null){
+            let removedFollower = await followingModel.deleteOne({uid:myFollower, followId:uid, isAccepted:true});
+            res.json({
+                message:"my follower removed!!",
+                removedFollower
+            })
+        }else{
+            res.json({
+                message:"follower don't exist!!!"
+            })
+        }
+    }
+    catch(error){
+
+    }
+}
+
+
+async function getAllFollowing(req , res){
+    try{
+        let {uid} = req.body;
+        let docs = await followerModel.find({followerId:uid}).exec();
+        console.log(docs);
+        let followers = [];
+        for(let i = 0; i < docs.length; i++){
+            let uid = docs[i].uid;
+            let user = await userModel.findById(uid);
+            followers.push(user);
+        }
+        console.log(followers);
+        res.json({
+            message:"Got all followers",
+            followers
+        })
+    }
+    catch(error){
+        res.json({
+            message:"failed to get all followers",
+            error
+        })
+    }
+
+}
+
+async function getAllFollowers(req , res){
+    try{
+        let {uid} = req.body;
+        let allFollowers = await followingModel.find({uid:uid, isAccepted:true}).exec();
+        console.log(allFollowers);
+        let following = [];
+        for(let i = 0; i < allFollowers.length; i++){
+            let followId = allFollowers[i].followId;
+            let user = await userModel.findById(followId);
+            following.push(user);
+        }
+        console.log(following);
+        res.json({
+            message:"Got all following",
+            following
+        })
+    }
+    catch(error){
+        res.json({
+            message:"failed to get all following",
+            error
+        })
+    }
+}
+
+async function getSuggestions(req , res){
+    try{
+        res.json({
+            message:"Hey im getSuggestions!!!"
+        })
+    }
+    catch(error){
+
+    }
+
+
+}
 module.exports.sendRequest = sendRequest;
 module.exports.acceptRequest = acceptRequest;
 module.exports.pendingRequests = pendingRequests;
+module.exports.deleteRequest = deleteRequest;
+module.exports.cancelRequest = cancelRequest;
+module.exports.unfollow = unfollow;
+module.exports.deleteFollower = deleteFollower;
+module.exports.getAllFollowing = getAllFollowing;
+module.exports.getAllFollowers = getAllFollowers;
+module.exports.getSuggestions = getSuggestions;
