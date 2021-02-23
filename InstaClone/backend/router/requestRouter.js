@@ -1,16 +1,21 @@
-const { sendRequest,acceptRequest, pendingRequests, deleteRequest, cancelRequest, unfollow, getAllFollowing, getAllFollowers, getSuggestions, deleteFollower
+const { sendRequest,acceptRequest, pendingRequests, deleteRequest, cancelRequest, deleteFollowing, getAllFollowing, getAllFollowers, getSuggestions, deleteFollower
 } = require("../controller/requestController");
 const requestRouter = require("express").Router();
 
-requestRouter.route("").post(sendRequest).get(getAllFollowing);
-requestRouter.route("/followers").get(getAllFollowers).delete(deleteFollower)
+requestRouter.route("").post(sendRequest);
 requestRouter.route("/accept").post(acceptRequest);
-requestRouter.route("/suggestion").get(getSuggestions);
+
+requestRouter.route("/following/:uid").get(getAllFollowing);
+requestRouter.route("/following/:uid").delete(deleteFollowing);
+requestRouter.route("/followers/:uid").get(getAllFollowers);
+requestRouter.route("/follower/:uid").delete(deleteFollower);
+requestRouter.route("/suggestions/:uid").get(getSuggestions);
+
+
 requestRouter.route("/:uid")
 .get(pendingRequests)
 .delete(deleteRequest)
-.patch(cancelRequest)
-.post(unfollow);
+.patch(cancelRequest);
 
 
 module.exports = requestRouter;
