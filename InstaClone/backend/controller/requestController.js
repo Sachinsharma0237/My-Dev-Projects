@@ -186,7 +186,6 @@ async function deleteFollower(req , res){
         })
     }
 }
-
 async function getFollowingHelper(uid) {
     try{
         let following = await followingModel.find({uid:uid, isAccepted:true}).exec();
@@ -201,7 +200,6 @@ async function getFollowingHelper(uid) {
         return error;
     }
 }
-
 async function getAllFollowing(req , res){
     try{
         let uid = req.params.uid;
@@ -225,7 +223,6 @@ async function getAllFollowing(req , res){
     }
 
 }
-
 async function getAllFollowers(req , res){
     try{
         let uid = req.params.uid;
@@ -254,7 +251,6 @@ async function getAllFollowers(req , res){
         })
     }
 }
-
 async function getSuggestions(req , res){
     try{
         let uid = req.params.uid;
@@ -287,6 +283,7 @@ async function getSuggestions(req , res){
         })
     }
 }
+
 module.exports.sendRequest = sendRequest;
 module.exports.acceptRequest = acceptRequest;
 module.exports.pendingRequests = pendingRequests;
