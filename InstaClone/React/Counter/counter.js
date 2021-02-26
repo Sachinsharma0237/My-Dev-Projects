@@ -37,8 +37,8 @@ class Counter extends React.Component{
     //2. Render Method Call
     render(){
         return <React.Fragment>
-            <div className = "container">
-            <p className = "">{this.state.count}</p>
+            <div className = "container ">
+            <p className = "display-1">{this.state.count}</p>
             <button className = "btn btn-primary" onClick={this.increment}>+</button>
             <button className = "btn btn-danger" onClick={this.decrement}>-</button>
             <button className = "btn btn-warning" onClick={this.reset}>RESET</button>
