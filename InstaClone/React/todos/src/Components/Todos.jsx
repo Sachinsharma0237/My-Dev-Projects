@@ -8,7 +8,7 @@ class Todos extends Component {
         let todos = this.props.todos;
         let deleteTodo = this.props.deleteTodo;
         return ( 
-            <div className="todos container border border-warning">
+            <div className="todos container ">
                 { todos.map( todoObj =>{
                     return <div className="input-group mb-3">
                         <input className="form-control" value = {todoObj.todo} disabled></input>

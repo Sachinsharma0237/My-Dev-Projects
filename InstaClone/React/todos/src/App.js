@@ -4,12 +4,13 @@ import Todos from './Components/Todos';
 
 class App extends Component {
   state = { 
-    todos:[
-    {id:1, todo:"Learn Java"}, 
-    {id:2, todo:"Learn DSA"}, 
-    {id:3, todo:"Learn JS"}, 
-    {id:4, todo:"Learn C++"} 
-  ]
+    todos:[]
+  }
+
+  addToDo = (todo) =>{
+    this.setState({
+      todos:[ ...this.state.todos, { id:this.state.todos.length+1, todo:todo }]
+    })
   }
 
   deleteTodo = (id) =>{
@@ -26,7 +27,7 @@ class App extends Component {
   render() { 
     return ( 
       <div className="container">
-        <InputBox/>
+        <InputBox addToDo={this.addToDo}/>
         <Todos todos = {this.state.todos} deleteTodo = {this.deleteTodo}/>
       </div>
      );

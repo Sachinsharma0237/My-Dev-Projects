@@ -1,11 +1,32 @@
 import React, { Component } from 'react';
-import Todos from './Todos';
 
 class InputBox extends Component {
-    state = {  }
+    state = { 
+        todo:""
+
+     }
+
+     onChangeHandler = (e) =>{
+        let value = e.target.value;
+        this.setState({
+            todo:value
+        })
+     }
+
+
+    addTodoHandle = () =>{
+        this.props.addToDo(this.state.todo);
+        this.setState({
+            todo:""
+        })
+    }
+
     render() { 
         return ( 
-            <h1>Hello from InputBox</h1>
+            <div className="input-group mt-3 mb-3">
+                 <input className="form-control" value ={this.state.todo} onChange={ (e)=>{this.onChangeHandler(e)}  } ></input>
+                 <button className="btn btn-primary" onClick={ this.addTodoHandle }>ADD TODO</button>
+            </div>
          );
     }
 }
