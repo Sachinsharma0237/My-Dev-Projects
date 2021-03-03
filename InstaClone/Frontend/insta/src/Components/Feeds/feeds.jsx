@@ -58,7 +58,7 @@ class Feeds extends Component {
             { this.state.posts.length ?   this.state.posts.map( post => {
                 return <Post key={post["_id"]} post={ post } />
             }) :
-            <h1 >No Post To Show</h1> }
+            <h1 style={{color: "orange", position:"absolute", top:"250px", left:"500px" }}>No Post To Show</h1> }
             </div> );
     }
 }
