@@ -1,6 +1,7 @@
 const express = require('express');
 const requestRouter = require('./router/requestRouter');
 const userRouter = require('./router/userRouter');
+const postRouter = require('./router/postRouter')
 const app = express();
 
 
@@ -15,7 +16,7 @@ app.use("/api/user", userRouter);
 
 app.use("/api/request", requestRouter);
 
-
+app.use("/api/post", postRouter);
 
 
 let port = process.env.PORT || 4000;

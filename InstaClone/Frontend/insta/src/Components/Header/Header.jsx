@@ -6,7 +6,7 @@ class Header extends Component {
     render() { 
         return ( <div className="header">
             <div className="logo">
-                <img src="logo1.png" alt=""/>
+                <img src="logoNew.png" alt=""/>
             </div>
             <div className="search-box">
                 <input type="text" placeholder="🔎 Search" name="" id=""/>

@@ -27,7 +27,7 @@ class Home extends Component {
                     <HomeProfile user ={this.state.user}/> 
                  </React.Fragment> 
                  ) : ( 
-                 <h1>loading.....</h1> 
+                 <h1 className="spinner-border text-warning" id="no-post-tag"></h1> 
                  )}
             </div>
          );

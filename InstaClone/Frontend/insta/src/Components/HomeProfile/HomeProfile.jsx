@@ -1,23 +1,55 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import "./HomeProfile.css"
 
 class HomeProfile extends Component {
-    state = {  }
+    state = { 
+        suggestions : null
+     }
+
+    componentDidMount(){
+        let uid = this.props.user["_id"];
+        axios.get(`/api/request/suggestions/${uid}`).then( obj =>{
+            let suggestions = obj.data.suggestions;
+            this.setState({
+                suggestions:suggestions
+            })
+        } )
+    }
+
     render() { 
         let { name, username, profilePic } = this.props.user;
         return ( 
             <div className="home-profile">
                 <div className="user-info">
                     <div className="user-image">
-                        <img src= {profilePic} alt=""/>
+                        <img src= {profilePic} />
                     </div>
                     <div className="name">
-                        <p><strong>{username}</strong></p>
-                        <p>{name}</p>
+                        <div className="myusername"><strong>{username}</strong> 
+                        <div className="myname">{name}</div>
+                        </div>
                     </div>
 
                 </div>
-                <div className="user-suggestions">Suggestions</div>
+                    { this.state.suggestions ? ( <div className="user-suggestions">Suggestions For You
+                    { this.state.suggestions.map( suggestionUser => {
+                        return <div key = {suggestionUser["_id"]} className="suggestion-user">
+                            <div className="suggestion-profile-photo">
+                                <img src= { suggestionUser.profilePic } alt=""/>
+                            </div>
+                            <div className="suggestion-details">
+                                <div className="username">{suggestionUser.username}</div>
+                                <div className="name">{suggestionUser.name}</div>
+                            </div>
+                            <div className="follow-btn">
+                                <div>Follow</div>
+                            </div>
+                        </div>
+                    }) }
+                    </div> ) : (<h1>No suggestions</h1>) }
+                    
+
             </div>
          );
     }

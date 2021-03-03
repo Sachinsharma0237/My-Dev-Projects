@@ -251,38 +251,37 @@ async function getAllFollowers(req , res){
         })
     }
 }
-async function getSuggestions(req , res){
-    try{
-        let uid = req.params.uid;
-        let myFollowing = await getFollowingHelper(uid);
-        let checkList = myFollowing.map(function(user){
-            return user["_id"] + "";
-        });
-        checkList.push(uid);
-        console.log(checkList);
-        let suggestions = [];
-        for(let i = 0; i < myFollowing.length; i++){
-            let followingOfMyFollowings = await getFollowingHelper(myFollowing[i]["_id"]); 
-            for(let j = 0; j < followingOfMyFollowings.length; j++){
-                if( !checkList.includes(followingOfMyFollowings[j]["_id"]) ){
-                    suggestions.push(followingOfMyFollowings[j]);
-                    checkList.push(followingOfMyFollowings[j]["_id"] + "");
-                }
-            }
-        }
 
-        res.json({    
-            message:"Successfully got all suggestions!!!",
-            suggestions
-        })
+async function getSuggestions(req, res) {
+    try {
+      let uid = req.params.uid;
+      let myFollowing = await getFollowingHelper(uid);
+      let checkList = myFollowing.map( function(user){
+          return user["_id"]+"";
+      });
+      checkList.push(uid);
+      let suggestions = [];
+      for(let i=0 ; i<myFollowing.length ; i++){
+          let followingOfMyFollowings = await getFollowingHelper(myFollowing[i]["_id"]);
+          for(let j=0 ; j<followingOfMyFollowings.length ; j++){
+              if(!checkList.includes(followingOfMyFollowings[j]["_id"])){
+                  suggestions.push(followingOfMyFollowings[j]);
+                  checkList.push(followingOfMyFollowings[j]["_id"]+"");
+              }
+          }
+      }
+      res.json({
+          message:"Succesfully got all suggestions !",
+          suggestions
+      });
+    } catch (error) {
+      res.json({
+        message: "Failed to get suggestions !",
+        error,
+      });
     }
-    catch(error){
-        res.json({
-            message:"Failed to get Suggestions",
-            error
-        })
-    }
-}
+  }
+
 
 module.exports.sendRequest = sendRequest;
 module.exports.acceptRequest = acceptRequest;
