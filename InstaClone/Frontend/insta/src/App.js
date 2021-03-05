@@ -21,6 +21,11 @@ class App extends Component {
     } )
   } 
 
+  updatedUser = (updatedUser) =>{
+      this.setState({
+        user:updatedUser
+      })
+  }
 
 
   render() { 
@@ -40,7 +45,7 @@ class App extends Component {
       </Route>
 
       <Route path="/settings" exact>
-      <Settings user ={ user }/>
+      <Settings user ={ user } updatedUser={this.updatedUser}/>
       </Route>
       <Route path ="*" exact>
         <Redirect to="/" ></Redirect>
