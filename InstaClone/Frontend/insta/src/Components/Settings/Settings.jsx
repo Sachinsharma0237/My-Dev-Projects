@@ -2,13 +2,95 @@ import React, { Component } from 'react';
 import './Settings.css';
 
 class Settings extends Component {
-    state = {  }
+    state = {  
+        name:"",
+        username:"",
+        bio:"",
+        email:"",
+        password:"",
+        profilePic:"",
+        disabled:true
+    }
+    onChangeHandler = (e) =>{
+        let type = e.target.id;    //name, username, password, email, bio
+        let value = e.target.value;
+        this.setState({
+            [type]:value
+        })
+    }
+    onEditHandler = () =>{
+        this.setState({
+            disabled:false
+        })
+    }
+    onCancelHandler = () =>{
+        this.setState({
+            disabled:true
+        })
+    }
+
+    componentDidMount(){
+        let { name, username, bio, email, password, profilePic } = this.props.user;
+        this.setState({
+            name, 
+            username,
+            bio,
+            email,
+            password,
+            profilePic    
+        })
+
+    }
+
+
     render() { 
         return ( 
-        <React.Fragment>
-            <h1>Settings Component</h1>  
-            <h1>Settings Component</h1>  
-        </React.Fragment>
+            <div className="settings">
+
+            <div className="profile-photo">
+                <img src={this.state.profilePic} alt=""/>
+                <input type="file" name="" id=""/>
+                <button >Update Photo</button>
+            </div>
+            <div className="profile-details">
+
+                <div className="profile-details-form">
+
+                <div className="detail">
+                    <h2>Name</h2>
+                    <input type="text" id="name" value={this.state.name} onChange={ (e) => {this.onChangeHandler(e)} } disabled={this.state.disabled}  />
+                </div>
+                <div className="detail">
+                    <h2>Username</h2>
+                    <input type="text" id="username" value={this.state.username} onChange={ (e) => this.onChangeHandler(e) } disabled={this.state.disabled}/>
+                </div>
+                <div className="detail">
+                    <h2>Bio</h2>
+                    <input type="text" id="bio" value={this.state.bio} onChange={ (e) => this.onChangeHandler(e) } disabled={this.state.disabled}/>
+                </div>
+                <div className="detail">
+                    <h2>Email</h2>
+                    <input type="text" id="email" value={this.state.email} onChange={ (e) => this.onChangeHandler(e) } disabled={this.state.disabled}/>
+                </div>
+                <div className="detail">
+                    <h2>Password</h2>
+                    <input type="password" id="password" value={this.state.password} onChange={ (e) => this.onChangeHandler(e) } disabled={this.state.disabled}/>
+                </div>
+                </div>
+
+                { this.state.disabled ? (
+                    <div className="profile-actions">
+                    <button className="edit" onClick={ this.onEditHandler }>Edit</button>
+                    </div>
+                ) : (
+                <div className="profile-actions">
+                <button className="cancel" onClick={ this.onCancelHandler }>Cancel</button>
+                <button className="save">Save</button>
+                </div>
+                ) }
+                
+            </div>
+        </div>
         );
     }
 }

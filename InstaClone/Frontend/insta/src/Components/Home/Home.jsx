@@ -9,13 +9,11 @@ class Home extends Component {
     state = { 
         user: null
      }
+
     componentDidMount(){
-        axios.get(`/api/user/${uid}`).then( obj =>{
-            let user = obj.data.user;
-            this.setState({
-                user:user
-            })
-        } )
+        this.setState({
+            user:this.props.user
+        })
     }
 
     render() { 
