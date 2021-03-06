@@ -5,30 +5,36 @@ class Post extends Component {
     state = { 
         userPhoto:"",
         username:"",
-        uid:"",
         caption:"",
         postImage:"",
         comment:[],
         likes:[]
      }
     componentDidMount(){
-        let postUserUid = this.props.post.uid;
-        let post = this.props.post;
-        axios.get(`/api/user/${postUserUid}`).then( obj => {
-            let postUser = obj.data.user;
+        if(this.props.user){
             this.setState({
-                username : postUser.username,
-                userPhoto : postUser.profilePic,
-                caption : post.caption,
-                postImage : post.postImage,
-                uid : post.uid,
-                comment : post.comment,
-                likes : post.likes
-
+                userPhoto:this.props.user.profilePic,
+                username:this.props.user.username,
+                caption:this.props.user.bio,
+                postImage:this.props.user.postImage,
+                comment:this.props.user.comments,
+                likes:this.props.user.likes
             })
-
-
-        })
+        }else{
+            let postUserUid = this.props.post.uid;
+            let post = this.props.post;
+            axios.get(`/api/user/${postUserUid}`).then((obj) => {
+              let postUser = obj.data.user;
+              this.setState({
+                userPhoto: postUser.profilePic,
+                username: postUser.username,
+                caption: post.caption,
+                postImage: post.postImage,
+                comments: post.comments,
+                likes: post.likes,
+              });
+            });
+        }
      }
 
     render() { 
