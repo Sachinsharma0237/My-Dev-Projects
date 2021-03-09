@@ -7,7 +7,6 @@ async function createUser(req, res){
         if(req.file){
             let profilePicPath = req.file.destination.substring(6) + "/" + req.file.filename;
             userObject.profilePic = profilePicPath;
-            console.log(userObject);
         }     
         let userCreated = await userModel.create(userObject);
         res.json({

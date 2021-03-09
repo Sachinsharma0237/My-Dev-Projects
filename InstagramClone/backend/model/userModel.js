@@ -12,7 +12,8 @@ let userSchema = mongoose.Schema({
     },
     bio:{
         type:String,
-        required:true
+        required:true,
+        default:"write about yourself"
     },
     email:{
         type:String,

@@ -39,8 +39,8 @@ class Profile extends Component {
                 posts,
                 followers,
                 following
-            })
-        })
+            });
+        });
     }
 
     onViewChangeHandler =(view) =>{
@@ -70,11 +70,11 @@ class Profile extends Component {
                     <div className="profile-right">
                         <div className="profile-post" onClick={()=>{this.onViewChangeHandler("POSTS")} }>
                             <div className="count">{this.state.posts.length}</div>
-                            <h3>POSTS</h3>
+                            <h3>POST</h3>
                         </div>
                         <div className="profile-follower"onClick={()=>{this.onViewChangeHandler("FOLLOWERS")}}>
                         <div className="count" >{this.state.followers.length}</div>
-                            <h3>FOLLOWERS</h3>
+                            <h3>FOLLOWER</h3>
                         </div>
                         <div className="profile-following"onClick={()=>{this.onViewChangeHandler("FOLLOWING")}}>
                         <div className="count">{this.state.following.length}</div>
@@ -109,8 +109,6 @@ class Profile extends Component {
                                 <div className="following-bio">{following.bio}</div>
                             </div>
                     })}
-
-
                 </div>
             </div>
         );
