@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import "./Header.css"
-
+import App from "../../App";
 import {Link} from 'react-router-dom';
 class Header extends Component {
-    state = {  }
+    state = { }
 
     render() { 
         return ( <div className="header">
@@ -12,8 +12,9 @@ class Header extends Component {
                 <img src="logoNew.png" alt=""/>
                 </div>
                 </Link>
-
-            <div className="search-box">
+                { this.props.isAuth ?
+                <React.Fragment>
+                    <div className="search-box">
                 <input type="text" placeholder="🔎 Search" name="" id=""/>
             </div>
             <div className="nav-links">
@@ -28,10 +29,19 @@ class Header extends Component {
                         <Link to="/settings">Settings</Link>
                     </li>
                     <li>
-                        <Link to="/logout" >Logout</Link>
+                        <Link to="/" onClick={this.props.logout}>Logout</Link>
                     </li>
                 </ul>
             </div>
+                </React.Fragment>  :
+                <div className="nav-links">
+                    <ul>
+                    <li>
+                        <Link to="/login" >Login</Link>
+                    </li>
+                    </ul>
+                </div>
+            }
         </div> );
     }
 }

@@ -5,20 +5,43 @@ import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom
 import Profile from './Components/Profile/Profile.jsx';
 import Settings from './Components/Settings/Settings.jsx';
 import axios from 'axios';
-import uid from './uid';
+import Login from './Login/Login';
 
 class App extends Component {
   state = { 
-    user:null
+    user:null,
+    isAuth:false
    }
 
+  login = () =>{
+  //   axios.get(`/api/user/${uid}`).then( obj =>{
+  //     let user = obj.data.user;
+  //     this.setState({
+  //         user:user,
+  //         isAuth:true
+  //     })
+  // })
+  window.location = "/auth/google";
+  }
+
+  logout = () =>{
+    axios.get("/auth/destroyCookie").then( obj =>{
+      this.setState({
+        isAuth:false,
+        user:null
+      })
+    })
+  }
+
   componentDidMount(){
-    axios.get(`/api/user/${uid}`).then( obj =>{
-        let user = obj.data.user;
-        this.setState({
-            user:user
-        })
-    } )
+      axios.get("/auth/checkAuth").then( obj =>{
+        if(obj.data.isAuth){
+          this.setState({
+            isAuth:true,
+            user:obj.data.user
+          })
+        }
+      })
   } 
 
   updatedUser = (updatedUser) =>{
@@ -32,30 +55,27 @@ class App extends Component {
     let user = this.state.user;
     return (  
       <Router>    
-      <Header/>
-      { user ? 
       <div className="app">
+      <Header isAuth={this.state.isAuth} logout={this.logout}/>
       <Switch>
       <Route path="/" exact>
-      <Home  user ={ user }/>
+        { this.state.isAuth ? (<Home  user ={ user }/>) : (<Login login = {this.login}></Login>) }
       </Route>
 
       <Route path="/profile" exact>
-      <Profile user ={ user }/>
+      { this.state.isAuth ? <Profile user ={ user }/> : <Login login = {this.login}></Login> }
       </Route>
 
       <Route path="/settings" exact>
-      <Settings user ={ user } updatedUser={this.updatedUser}/>
+      { this.state.isAuth ?  <Settings user ={ user } updatedUser={this.updatedUser}/> : <Login login = {this.login}></Login> }
       </Route>
+
       <Route path ="*" exact>
         <Redirect to="/" ></Redirect>
       <Home/>
       </Route>
       </Switch>
       </div>
-      :
-      (<h1 style={{position:"absolute", top:"300px", left:"300px"}} >Loading.....</h1> )
-      }
       </Router> );
   }
 }

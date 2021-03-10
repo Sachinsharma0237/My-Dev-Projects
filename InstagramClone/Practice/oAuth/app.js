@@ -1,9 +1,7 @@
 const express = require("express");
 const app = express();
 let passport = require("passport");
-let GoogleStrategy = require("passport-google-oauth2").Strategy;
-let {CLIENT_ID, CLIENT_PW} = require("./config/secrets");
-let cookie = require("cookie-session");
+
 
 let {mongoose} = require("../../backend/model/db");
 let userModel = require("../../backend/model/userModel"); //{ name, username, bio, email, password }
@@ -24,7 +22,7 @@ app.use(passport.session());
 //Serialize User
 passport.serializeUser(function(user, done){
     console.log("Inside Serialize user!!");
-    //console.log(user);
+    console.log(user);
     done(null, user);
 })
 
