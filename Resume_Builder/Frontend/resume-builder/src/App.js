@@ -1,8 +1,9 @@
 import firebaseApp from './firebase/firebaseConfig';
 import React, { Component } from 'react';
-import Skin from './Components/Skin/skin.jsx';
+import Skin from './Components/Skin/skin1.jsx';
 import Navbar from './Components/Navbar/navbar.jsx'
 import Login from "./Components/Login/Login";
+import Skin2 from "./Components/Skin/skin2.jsx";
 class App extends Component {
   state = { 
     isAuth: true
@@ -46,9 +47,8 @@ class App extends Component {
     let { isAuth } = this.state;
     return ( 
       <div className="App" >
-        <Navbar isAuth={isAuth} ></Navbar>
-        <Login/>
-        <Skin></Skin>
+        <Skin2></Skin2>
+        {/* <Skin></Skin> */}
       </div> 
     );
   }

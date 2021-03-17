@@ -49,7 +49,7 @@ class Post extends Component {
                 </div>
                 <div className="post-body">
                     <div className="post-image">
-                        <img src={postImage} alt=""/>
+                        <img src={postImage} alt="user.png"/>
                     </div>
                     <div className="post-actions">
                         <div className="like-comment">
