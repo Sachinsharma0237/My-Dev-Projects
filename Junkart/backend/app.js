@@ -9,6 +9,6 @@ app.use( express.json() );
 app.use("/api/user", userRouter);
 
 
-app.listen("3000",function(req, res){
-    console.log("Server Started on Port 3000");
+app.listen("4000",function(req, res){
+    console.log("Server Started on Port 4000");
 })

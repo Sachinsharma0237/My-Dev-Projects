@@ -5,36 +5,36 @@ const userSchema =  mongoose.Schema({
 
     name:{
         type: String,
-        required: true
+      //  required: true
     },
     email:{
         type: String,
-        required: true,
-        unique: true
+     //   required: true,
+     //   unique: true
     },
     age:{
         type: String,
-        required: true
+    //    required: true
     },
     cheeks:{
         type: String,
-        required: true
+      //  required: true
     },
     tZone:{
         type: String,
-        required: true
+      //  required: true
     },
     skinConcerns:{
         type: String,
-        required: true
+        //required: true
     },
     allergic:{
         type: String,
-        required: true
+     //   required: true
     },
     randomIssues:{
         type: String,
-        required: true
+     //   required: true
     }
 
 })
