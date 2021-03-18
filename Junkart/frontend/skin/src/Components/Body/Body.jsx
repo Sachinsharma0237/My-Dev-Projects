@@ -1,3 +1,4 @@
+  
 import React, { Component } from 'react';
 
 import "./Body.css"
@@ -15,10 +16,8 @@ class Body extends Component {
             randomIssues:[]
      }
 
-    componentDidMount(){
-        
-    }
 
+     
     onChangeHandler = (e)=>{
         let id = e.target.id;
         let value = e.target.value;
@@ -30,7 +29,7 @@ class Body extends Component {
     onCheckHandler = (e)=>{
         let id = e.target.id;
         this.setState({
-           randomIssues:id
+           randomIssues:[...this.state.randomIssues , id]
         })
     }
 
@@ -65,8 +64,8 @@ class Body extends Component {
         })
     }
 
-    addUserHandler = () =>{
-        // this.props.addUser(this.state.name, this.state.email, this.state.age, this.state.cheeks, this.state.tZone, this.state.skinConcerns, this.state.allergic, this.state.randomIssues);
+    addUserHandler = async() =>{
+
         const user = {
             name: this.state.name,
             email: this.state.email,
@@ -79,18 +78,22 @@ class Body extends Component {
         }
         console.log(user.name);
         console.log(user.email);
-        axios.post("/api/user", {"name":user.name, "email":user.email, "age":user.age, "cheeks":user.cheeks,"tZone":user.tZone, "skinConcerns":user.skinConcerns,  "randomIssues":user.randomIssues, "allergic":user.allergic, }).then( (obj)=>{
+        await axios.post("/api/user", {"name":user.name, "email":user.email, "age":user.age, "cheeks":user.cheeks,"tZone":user.tZone, "skinConcerns":user.skinConcerns,  "randomIssues":user.randomIssues, "allergic":user.allergic, }).then( (obj)=>{
             console.log(obj);
         }) 
+        this.props.updateParent({
+            name:this.state.name, 
+            email:this.state.email, 
+            age:this.state.age, 
+            cheeks:this.state.cheeks, 
+            tZone:this.state.tZone, 
+            skinConcerns:this.state.skinConcerns, 
+            allergic:this.state.allergic, 
+            randomIssues:this.state.randomIssues
+         })
     }
 
-
-
-
-
-
     render() { 
-
         return ( 
             <div className="body">
                 <div className="user-details">
@@ -163,6 +166,7 @@ class Body extends Component {
                 <div className="email-input">(No spam, we feel you!)
                 <input type="text"  id="email" placeholder="Email" onChange={ (e)=>{this.onChangeHandler(e)} } />
                 <button className="btn btn-primary btn-lg" id="routine" onClick={this.addUserHandler} >SEE YOUR ROUTINE</button>
+                
                 </div>
                 </div>
             </div>

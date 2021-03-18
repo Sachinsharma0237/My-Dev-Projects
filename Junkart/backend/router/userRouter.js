@@ -1,6 +1,6 @@
-const { createUser, updateUser } = require("../controller/userController");
+const { createUser } = require("../controller/userController");
 const userRouter = require("express").Router();
 
-userRouter.route("").post(createUser).patch(updateUser);
+userRouter.route("").post(createUser);
 
 module.exports = userRouter;

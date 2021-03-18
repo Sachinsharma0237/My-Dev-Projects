@@ -18,14 +18,5 @@ async function createUser(req, res){
     }
 }
 
-async function updateUser(req, res){
-    try{
-
-    }
-    catch(error){
-
-    }
-}
 
 module.exports.createUser = createUser;
-module.exports.updateUser = updateUser;
