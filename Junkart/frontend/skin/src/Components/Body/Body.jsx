@@ -78,7 +78,7 @@ class Body extends Component {
         }
         console.log(user.name);
         console.log(user.email);
-        await axios.post("/api/user", {"name":user.name, "email":user.email, "age":user.age, "cheeks":user.cheeks,"tZone":user.tZone, "skinConcerns":user.skinConcerns,  "randomIssues":user.randomIssues, "allergic":user.allergic, }).then( (obj)=>{
+        await axios.post("https://junkart-sachinsharma.herokuapp.com/api/user", {"name":user.name, "email":user.email, "age":user.age, "cheeks":user.cheeks,"tZone":user.tZone, "skinConcerns":user.skinConcerns,  "randomIssues":user.randomIssues, "allergic":user.allergic, }).then( (obj)=>{
             console.log(obj);
         }) 
         this.props.updateParent({
