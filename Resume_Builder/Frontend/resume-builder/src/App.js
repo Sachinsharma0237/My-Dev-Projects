@@ -1,57 +1,90 @@
-import firebaseApp from './firebase/firebaseConfig';
 import React, { Component } from 'react';
-import Skin from './Components/Skin/skin1.jsx';
-import Navbar from './Components/Navbar/navbar.jsx'
-import Login from "./Components/Login/Login";
-import Skin2 from "./Components/Skin/skin2.jsx";
+import firebaseApp from "./firebase/firebaseConfig";
+import Navbar from "./Components/Navbar/navbar";
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
+import LandingPage from './Components/LandingPage/LandingPage';
+import About from './Components/About/About';
+import Templates from './Components/Templates/Templates';
+import Profile from './Components/Profile/Profile';
+import SignUp from './Components/SignUp/SignUp';
+import SignIn from './Components/SignIn/SignIn';
+
 class App extends Component {
-  state = { 
-    isAuth: true
-   }
+  state = {
+      isAuth : true,
+      user : null
+    }
+
+
+    login = () =>{
+        //login to firebase
+
+    }
+
+
+    logout = () =>{
+      firebaseApp.auth().signOut().then( obj=>{
+        console.log("Signed out");
+        this.setState({
+          isAuth : false
+        })
+      })
+    }
 
   componentDidMount(){
-    //API calling
-    //get all documents
-    firebaseApp.firestore().collection("resumes").get().then( (alldocs) =>{
-        alldocs.forEach((doc) =>{
-          console.log(doc.id);
-          console.log(doc.data());
+    firebaseApp.auth().onAuthStateChanged( function(userInfo){
+      if(userInfo){
+        if(!this.state.isAuth){
+          this.setState({
+            isAuth : true,
+            user : userInfo.id
+          })
+        }
+      }else{
+        this.setState({
+          isAuth : false,
+          user : null
         })
+      }
     })
-    //Get single doc by Id
-    firebaseApp.firestore().collection("resumes").doc("FyhazWj1CyQUlvcbj8aG").get().then( (myDoc) =>{
-        console.log(myDoc.data());
-    })
+  }
 
-  }
-  addData =()=>{
-          
-      firebaseApp.firestore().collection("resumes").doc("FyhazWj1CyQUlvcbj8aG").update({
-          contactDetails : {
-            name:"Sachin Sharma",
-            Email:"Sachinsharma0237@gmail.com",
-            Phone:"9540360365"
-          },
-          educationDetails : {
-            CGPA:"10",
-            College:"DITE",
-            Degree:"B.Tech"
-          },
-          skin:"1"
-      }).then( ()=>{
-        console.log("Data set ho gya!!!");
-      })
-  }
-  
+
   render() { 
-    let { isAuth } = this.state;
+    let {isAuth} = this.state;
     return ( 
-      <div className="App" >
-        <Skin2></Skin2>
-        {/* <Skin></Skin> */}
-      </div> 
+      <Router>
+        <div className="App">
+        <Navbar isAuth={isAuth} logout={this.logout} ></Navbar>    
+          <Switch>
+          <Route path="/" exact>
+          <LandingPage></LandingPage>
+          </Route>
+
+          <Route path="/about" exact>
+          <About></About>
+          </Route>
+
+          <Route path="/templates" exact>
+            { isAuth ? (<Templates></Templates>) : ( <Redirect to="/login"></Redirect> )}
+          </Route>
+          
+          <Route path="/profile" exact>
+          { isAuth ? (<Profile></Profile>) : ( <Redirect to="/login"></Redirect> )}
+          </Route>
+
+          <Route path="/signup" exact>
+          { isAuth ? ( <Redirect to="/"></Redirect> ) : (<SignUp></SignUp>) }
+          </Route>
+
+          <Route path="/signin" exact>
+          { isAuth ? ( <Redirect to="/"></Redirect> ) : (<SignIn login={this.login} ></SignIn>) }
+          </Route>
+          </Switch> p
+        </div>
+      </Router>
     );
   }
 }
-
+ 
 export default App;

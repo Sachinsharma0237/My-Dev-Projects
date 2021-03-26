@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import "./SignIn";
 
-class Login extends Component {
+class SignIn extends Component {
   state = {};
   render() {
     return (
@@ -11,7 +12,7 @@ class Login extends Component {
         </div>
         <div>
           <h2>Password</h2>
-          <input type="password" />
+          <input type="text" />
         </div>
         <div className="signin-button">
            <button>Sign In</button> 
@@ -21,4 +22,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default SignIn;

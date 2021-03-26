@@ -1,28 +1,43 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import "./navbar.css";
 class Navbar extends Component {
     state = {  }
     render() { 
-        return ( <div className="navbar">
+        return (  
+            <div className="navbar">
             <div className="logo"></div>
-            {this.props.isAuth ? 
-                (<div className="navlinks">
+            {
+                this.props.isAuth? (
+                    <div className="navlinks">
                 <ul>
-                    <li><a href="/templates" > Templates </a></li>
-                    <li><a href="/about" > About </a></li>
-                    <li><a href="/profile" > Profile </a></li>
-                    <li><a href="/logout" > Logout </a></li>
+                            <li>
+                                <Link to="/templates">Templates</Link>
+                            </li>
+                            <li>
+                                <Link to="/about">About</Link>
+                            </li>
+                            <li>
+                                <Link to="/profile">Profile</Link>
+                            </li>
+                            <li>
+                                <Link onClick ={this.props.logout} >Logout</Link>
+                            </li>
                 </ul>
-            </div>) :
-           (<div className="navlinks">
+                    </div>
+                ) :
+                (
+                    <div className="navlinks">
            <ul>
                <li><a href="/about" > About </a></li>
                <li><a href="/signup" > Signup </a></li>
                <li><a href="/signin" > Signin </a></li>
            </ul>
-       </div>)
+                    </div>   
+                ) 
            }
-        </div> );
+            </div>
+         )
     }
 }
  

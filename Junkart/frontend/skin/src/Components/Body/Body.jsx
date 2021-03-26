@@ -1,6 +1,4 @@
-  
 import React, { Component } from 'react';
-
 import "./Body.css"
 import axios from "axios";
 
@@ -13,10 +11,18 @@ class Body extends Component {
             tZone:"", 
             skinConcerns:"", 
             allergic:"", 
-            randomIssues:[]
+            randomIssues:[],
+            userInput:""
      }
 
-
+    onInputHandler = (e)=>{
+        let id = e.target.id;
+        let value = e.target.value;
+        console.log(value);
+        this.setState({
+            userInput:value
+        })
+    }
      
     onChangeHandler = (e)=>{
         let id = e.target.id;
@@ -74,11 +80,13 @@ class Body extends Component {
             tZone:this.state.tZone,
             skinConcerns:this.state.skinConcerns,
             allergic:this.state.allergic,
-            randomIssues: this.state.randomIssues
+            randomIssues: this.state.randomIssues,
+            userInput: this.state.userInput
+
         }
         console.log(user.name);
         console.log(user.email);
-        await axios.post("https://junkart-sachinsharma.herokuapp.com/api/user", {"name":user.name, "email":user.email, "age":user.age, "cheeks":user.cheeks,"tZone":user.tZone, "skinConcerns":user.skinConcerns,  "randomIssues":user.randomIssues, "allergic":user.allergic, }).then( (obj)=>{
+        await axios.post("/api/user", {"name":user.name, "email":user.email, "age":user.age, "cheeks":user.cheeks,"tZone":user.tZone, "skinConcerns":user.skinConcerns,  "randomIssues":user.randomIssues, "allergic":user.allergic, "userInput":user.userInput }).then( (obj)=>{
             console.log(obj);
         }) 
         this.props.updateParent({
@@ -89,7 +97,8 @@ class Body extends Component {
             tZone:this.state.tZone, 
             skinConcerns:this.state.skinConcerns, 
             allergic:this.state.allergic, 
-            randomIssues:this.state.randomIssues
+            randomIssues:this.state.randomIssues,
+            userInput:this.state.userInput,
          })
     }
 
@@ -99,6 +108,9 @@ class Body extends Component {
                 <div className="user-details">
                     <div className="name">What's your Name?
                         <input type="text" value={this.state.name} id="name" onChange={ (e)=>{this.onChangeHandler(e)} } placeholder="Name"/>
+                    </div>
+                    <div className="user-problem">
+                        <input type="text" name="" id="userInput" value={this.state.userInput} onChange={(e)=>{this.onChangeHandler(e)}} />
                     </div>
                     <div className="age">What is your Age?
                     <div className="buttons">
