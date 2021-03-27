@@ -13,14 +13,14 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + path.extname(file.originalname));
     }
 });
-const fileFilter = function (req, file, cb) {
-    if( file.mimetype == 'image/jpg' || file.mimetype == 'image/jpeg' || file.mimetype == 'image/png'){
-        cb(null, true);
-    }else{
-        cb(null, false);
-    }
-}
-const upload = multer({storage:storage, fileFilter:fileFilter});
+// const fileFilter = function (req, file, cb) {
+//     if( file.mimetype == 'image/jpg' || file.mimetype == 'image/jpeg' || file.mimetype == 'image/png'){
+//         cb(null, true);
+//     }else{
+//         cb(null, false);
+//     }
+// }
+const upload = multer({storage:storage});
 
 //---------------------------IMAGE UPLOADING USING MULTER---------------------------------------------------------
 

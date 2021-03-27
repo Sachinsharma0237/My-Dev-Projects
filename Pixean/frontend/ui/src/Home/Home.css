@@ -1,6 +1,10 @@
+.h1-tag{
+    display: flex;
+    justify-content: center;
+}
 .home{
     position: absolute;
-    height: calc(100vh - 0px);
+    height: calc(100vh - 20px);
     border: 1px solid lightgray;
     left: 20px;
     top: 10px;

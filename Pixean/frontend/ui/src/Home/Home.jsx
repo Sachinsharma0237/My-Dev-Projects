@@ -35,12 +35,13 @@ class Home extends Component {
     render() { 
         return ( 
             <div className="home">
+                <h1 className="h1-tag">Upload Image here</h1>
                 <div className="file-input">
                 <input className="input" type="file" ref = {this.fileInput} name="" id=""/>
                 <button className="btn btn-warning" onClick={this.onClickHandler}>Upload Image</button>
                 </div>
                 <div className="image-file">
-                <img className="image" src={this.state.userPhoto} alt=""/>
+                { this.state.userPhoto ? (<img className="image" src={this.state.userPhoto} alt="img.png"/>) : (<h5>Please Upload Photo</h5>) }
                 </div>
             </div>
          );
