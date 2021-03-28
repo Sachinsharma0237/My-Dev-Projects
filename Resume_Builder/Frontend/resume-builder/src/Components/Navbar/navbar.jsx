@@ -29,9 +29,15 @@ class Navbar extends Component {
                 (
                     <div className="navlinks">
            <ul>
-               <li><a href="/about" > About </a></li>
-               <li><a href="/signup" > Signup </a></li>
-               <li><a href="/signin" > Signin </a></li>
+               <li>
+                    <Link to="/about" >About</Link>
+               </li>
+               <li>
+                   <Link to="/signup">Signup</Link>
+               </li>
+               <li>
+                    <Link to="/signin">Signin</Link>
+               </li>
            </ul>
                     </div>   
                 ) 

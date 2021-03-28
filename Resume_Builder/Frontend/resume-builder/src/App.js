@@ -16,9 +16,14 @@ class App extends Component {
     }
 
 
-    login = () =>{
-        //login to firebase
-
+    login = (id, pw) =>{
+      firebaseApp.auth().signInWithEmailAndPassword(id, pw).then( (obj)=>{
+        console.log("Logged In!!!!");
+        console.log(obj);
+        this.setState({
+          isAuth:true
+        })
+      })
     }
 
 
@@ -32,20 +37,12 @@ class App extends Component {
     }
 
   componentDidMount(){
-    firebaseApp.auth().onAuthStateChanged( function(userInfo){
-      if(userInfo){
-        if(!this.state.isAuth){
-          this.setState({
-            isAuth : true,
-            user : userInfo.id
-          })
-        }
-      }else{
+    firebaseApp.auth().onAuthStateChanged( (user)=>{
+      console.log("Inside auth state change", user);
         this.setState({
-          isAuth : false,
-          user : null
+          isAuth: user ? true : false,
+          user : user ? user.uid : null
         })
-      }
     })
   }
 
@@ -80,7 +77,7 @@ class App extends Component {
           <Route path="/signin" exact>
           { isAuth ? ( <Redirect to="/"></Redirect> ) : (<SignIn login={this.login} ></SignIn>) }
           </Route>
-          </Switch> p
+          </Switch>
         </div>
       </Router>
     );
