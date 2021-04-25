@@ -4,39 +4,73 @@ const userModel = require("../model/userModel");
 
 
 async function sendRequest(req, res) {
-    try{
+    try {
         let { uid, followId } = req.body;
-        let doc = await userModel.find({_id:followId}).exec();
+        let doc = await userModel.find({ _id: followId }).exec();
         console.log(doc);
-        if(doc[0].isPublic=="true"){                    
-            await followingModel.create({
-                uid,
-                followId
-            })
-            await followerModel.create({
-                uid:followId,
-                followerId:uid
-            })
-            res.json({
-                message:"request sent and accepted!"
-            })
-        }else{
-             //isPublic = false;
-            await followingModel.create({
-                uid,
-                followId,
-                isAccepted:false
-            })
-            res.json({
-                message:"Request sent and Pending!"
-            })
+        let allReadyPresentInFollowingModel = await followingModel.find({ uid: uid, followId: followId }).exec();
+        console.log(allReadyPresentInFollowingModel);
+        if (allReadyPresentInFollowingModel[0] == null) {
+            if (doc[0].isPublic) {
+                await followingModel.create({
+                    uid,
+                    followId
+                })
+                await followerModel.create({
+                    uid: followId,
+                    followerId: uid
+                })
+                res.json({
+                    message: "Request Sent and Accepted",
+                })
+            } else {
+                await followingModel.create({
+                    uid,
+                    followId,
+                    isAccepted: false
+                })
+                res.json({
+                    message: "Request Sent and Pending"
+                })
+            }
+
+        } else {
+            if (!(followId == allReadyPresentInFollowingModel[0].followId)) {
+                if (doc[0].isPublic) {
+                    await followingModel.create({
+                        uid,
+                        followId
+                    })
+                    await followerModel.create({
+                        uid: followId,
+                        followerId: uid
+                    })
+                    res.json({
+                        message: "Request Sent and Accepted",
+                    })
+                } else {
+                    await followingModel.create({
+                        uid,
+                        followId,
+                        isAccepted: false
+                    })
+                    res.json({
+                        message: "Request Sent and Pending"
+                    })
+                }
+            } else {
+                res.json({
+                    message: "Request Already Sent"
+                })
+            }
         }
+
     }
-    catch(error){
-            res.json({
-                message:"Failed to send request!",
-                error
-            })
+    catch (error) {
+        res.json({
+            message: "Failed to Send Request",
+            error
+        })
     }
 }
 async function acceptRequest(req, res) {
@@ -112,77 +146,78 @@ async function deleteRequest(req , res){
     }
     
 }
-async function cancelRequest(req , res){
-    try{
-        let {uid} = req.params;
-        let {toBeCanceled} = req.body;
-        let sentRequest = await followingModel.find({uid:uid, followId:toBeCanceled, isAccepted:false}).exec();
-        console.log(sentRequest);
-        if(sentRequest[0] != null){
-            let deletedRequest = await followingModel.deleteOne({uid:uid, followId:toBeCanceled, isAccepted:false});
+async function cancelRequest(req, res) {
+    try {
+        let uid = req.params.uid;
+        let { toBeCanceled } = req.body;
+        let doc = await followingModel.find({ uid: uid, followId: toBeCanceled, isAccepted: false }).exec();
+        if (doc[0] != null) {
+            let deletedRequest = await followingModel.deleteOne({ uid: uid, followId: toBeCanceled, isAccepted: false });
             res.json({
-                message:"request canceled",
+                message: "Successfully Canceled Request",
                 deletedRequest
             })
-        }else{
+        } else {
             res.json({
-                message:"Request don't exist"
+                message: "Request does not exist"
             })
         }
     }
-    catch(error){
-
-    }
-
-
-}
-async function deleteFollowing(req , res){
-    try{
-        let uid = req.params.uid;
-        let {toBeUnfollowed} = req.body;
-        let unfollowUser = await followerModel.find({uid:uid, followerId:toBeUnfollowed}).exec();
-        console.log(unfollowUser);
-        if(unfollowUser[0] != null){
-            let unfollowedUser = await followerModel.deleteOne({uid:uid, followerId:toBeUnfollowed});
-            res.json({
-                message:"unfollowed user!!!",
-                unfollowedUser
-            })
-        }else{
-            res.json({
-                message:"User don't exist"
-            })
-        }
-    }
-    catch(error){
+    catch (error) {
         res.json({
-            message:"Failed to unfollow!",
+            message: "Failed to cancel request",
+            error
+        })
+    }
+}
+async function deleteFollowing(req, res) {
+    try {
+        let uid = req.params.uid;
+        let { toBeUnfollowed } = req.body;
+        let unfollowUser = await followingModel.find({ uid: uid, followId: toBeUnfollowed, isAccepted: true }).exec();
+
+        if (unfollowUser[0] != null) {
+            let unfollowedUserFromFollowing = await followingModel.deleteOne({ uid: uid, followId: toBeUnfollowed, isAccepted: true });
+            let unfollowedUserFromFollower = await followerModel.deleteOne({ followerId: uid, uid: toBeUnfollowed });
+            res.json({
+                message: "User Unfollowed Successfully",
+                unfollowedUserFromFollowing,
+                unfollowedUserFromFollower
+            })
+        } else {
+            res.json({
+                message: "Following does not exist"
+            })
+        }
+    }
+    catch (error) {
+        res.json({
+            message: "Failed to Unfollow User",
             error
         })
     }
 
 }
-async function deleteFollower(req , res){
-    try{
+async function deleteFollower(req, res) {
+    try {
         let uid = req.params.uid;
-        let {myFollower} = req.body;
-        let request = await followingModel.find({uid:myFollower, followId:uid, isAccepted:true}).exec();
-        console.log(request);
-        if(request[0] != null){
-            let removedFollower = await followingModel.deleteOne({uid:myFollower, followId:uid, isAccepted:true});
+        let { toBeRemoveFollower } = req.body;
+        let follower = await followingModel.find({ uid: toBeRemoveFollower, followId: uid, isAccepted: true }).exec();
+
+        if (follower[0] != null) {
+            let removeFollowerFromFollowingCollection = await followingModel.deleteOne({ uid: toBeRemoveFollower, followId: uid, isAccepted: true });
+            let removeFollowerFromFollowerCollection = await followerModel.deleteOne({ uid: uid, followerId: toBeRemoveFollower });
             res.json({
-                message:"my follower removed!!",
-                removedFollower
-            })
-        }else{
-            res.json({
-                message:"follower don't exist!!!"
+                message: "Removed Follower Successfully",
+                removeFollowerFromFollowingCollection,
+                removeFollowerFromFollowerCollection
             })
         }
     }
-    catch(error){
+    catch (error) {
         res.json({
-            message:"Failed to remove follower!!"
+            message: "Failed to delete Follower",
+            error
         })
     }
 }
@@ -223,64 +258,68 @@ async function getAllFollowing(req , res){
     }
 
 }
-async function getAllFollowers(req , res){
-    try{
+async function getAllFollowers(req, res) {
+    try {
         let uid = req.params.uid;
-        let followerIds = await followerModel.find({uid:uid}).exec();
-        if(!followerIds.length){
-            res.json({
-                message:"Oops!! You don't have any followers"
-            })
-        }else{
-            let myFollower = [];
-            for(let i = 0; i < followerIds.length; i++){
-                let user = await userModel.findById( followerIds[i].followerId );
+        let followerIds = await followerModel.find({ uid: uid }).exec();
+        let myFollower = [];
+        if (followerIds.length) {
+            for (let i = 0; i < followerIds.length; i++) {
+                let user = await userModel.findById(followerIds[i].followerId);
                 myFollower.push(user);
             }
             res.json({
-                message:`Successfully got all followers = ${followerIds.length}`,
+                message: "Successfully got All Followers",
                 myFollower
-    
+            })
+        } else {
+            res.json({
+                message: "You don't have any Followers"
             })
         }
     }
-    catch(error){
+    catch (error) {
         res.json({
-            message:"failed to get all following",
+            message: "Failed to get All Followers",
             error
         })
     }
 }
-
 async function getSuggestions(req, res) {
     try {
-      let uid = req.params.uid;
-      let myFollowing = await getFollowingHelper(uid);
-      let checkList = myFollowing.map( function(user){
-          return user["_id"]+"";
-      });
-      checkList.push(uid);
-      let suggestions = [];
-      for(let i=0 ; i<myFollowing.length ; i++){
-          let followingOfMyFollowings = await getFollowingHelper(myFollowing[i]["_id"]);
-          for(let j=0 ; j<followingOfMyFollowings.length ; j++){
-              if(!checkList.includes(followingOfMyFollowings[j]["_id"])){
-                  suggestions.push(followingOfMyFollowings[j]);
-                  checkList.push(followingOfMyFollowings[j]["_id"]+"");
-              }
-          }
-      }
-      res.json({
-          message:"Succesfully got all suggestions !",
-          suggestions
-      });
-    } catch (error) {
-      res.json({
-        message: "Failed to get suggestions !",
-        error,
-      });
+        let uid = req.params.uid;
+        let myFollowing = await getFollowingHelper(uid);
+        let checkList = myFollowing.map(function (user) {
+            return user["_id"] + "";
+        });
+        checkList.push(uid);
+
+        let suggestions = [];
+        for(let i = 0; i < myFollowing.length; i++){
+            let followingOfMyFollowing = await getFollowingHelper(myFollowing[i]["_id"]);
+            for(let j=0; j < followingOfMyFollowing.length; j++){
+                if(!checkList.includes(followingOfMyFollowing[j]["_id"]  )){
+                    suggestions.push(followingOfMyFollowing[j]);
+                }
+            }
+            suggestions = suggestions.filter( user=>{
+                    return user["_id"] != uid;
+            })
+        }
+
+        res.json({
+            message:"Successfully got All Suggestions",
+            suggestions
+        })
+
     }
-  }
+    catch (error) {
+        res.json({
+            message: "Failed to get any Suggestions",
+            error
+        })
+    }
+}
 
 
 module.exports.sendRequest = sendRequest;

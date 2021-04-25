@@ -31,10 +31,23 @@ class App extends Component {
       firebaseApp.auth().signOut().then( obj=>{
         console.log("Signed out");
         this.setState({
-          isAuth : false
+          isAuth : false,
+          user : null
         })
       })
     }
+
+    signUp = (id, pw) =>{
+      console.log(id, pw);
+      firebaseApp.auth().createUserWithEmailAndPassword(id,pw).then( obj=>{
+        console.log("Sign Up");
+        let uid = obj.user.uid;
+        let name = obj.user.name;
+        let email = obj.user.email;
+        this.setState({
+          isAuth:true
+          })  
+    })}
 
   componentDidMount(){
     firebaseApp.auth().onAuthStateChanged( (user)=>{
@@ -71,7 +84,7 @@ class App extends Component {
           </Route>
 
           <Route path="/signup" exact>
-          { isAuth ? ( <Redirect to="/"></Redirect> ) : (<SignUp></SignUp>) }
+          { isAuth ? ( <Redirect to="/"></Redirect> ) : (<SignUp signUp={this.signUp}></SignUp>) }
           </Route>
 
           <Route path="/signin" exact>
