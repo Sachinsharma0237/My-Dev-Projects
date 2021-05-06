@@ -7,7 +7,7 @@ import Settings from './Components/Settings/Settings.jsx';
 import axios from 'axios';
 import Login from './Login/Login';
 
-class App extends Component {
+class App extends Component {   
   state = { 
     user:null,
     isAuth:false

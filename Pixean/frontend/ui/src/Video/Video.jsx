@@ -47,6 +47,10 @@ class Video extends Component {
                     <source src={this.state.selectedFile} type="video/mp4" ></source>
                     </video> */}
 
+                    {/* <video width="750" height="500" controls >
+                    <source src={this.state.selectedFile} type="video/mp4"/>
+                    </video> */}
+
                     <video src={this.state.selectedFile} controls>
                     Your browser does not support the video tag.
                     </video>

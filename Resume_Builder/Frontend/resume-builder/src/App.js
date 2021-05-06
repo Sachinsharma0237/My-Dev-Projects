@@ -16,9 +16,14 @@ class App extends Component {
     }
 
 
-    login = () =>{
-        //login to firebase
-
+    login = (id, pw) =>{
+      firebaseApp.auth().signInWithEmailAndPassword(id, pw).then( (obj)=>{
+        console.log("Logged In!!!!");
+        console.log(obj);
+        this.setState({
+          isAuth:true
+        })
+      })
     }
 
 
@@ -26,26 +31,31 @@ class App extends Component {
       firebaseApp.auth().signOut().then( obj=>{
         console.log("Signed out");
         this.setState({
-          isAuth : false
+          isAuth : false,
+          user : null
         })
       })
     }
 
-  componentDidMount(){
-    firebaseApp.auth().onAuthStateChanged( function(userInfo){
-      if(userInfo){
-        if(!this.state.isAuth){
-          this.setState({
-            isAuth : true,
-            user : userInfo.id
-          })
-        }
-      }else{
+    signUp = (id, pw) =>{
+      console.log(id, pw);
+      firebaseApp.auth().createUserWithEmailAndPassword(id,pw).then( obj=>{
+        console.log("Sign Up");
+        let uid = obj.user.uid;
+        let name = obj.user.name;
+        let email = obj.user.email;
         this.setState({
-          isAuth : false,
-          user : null
+          isAuth:true
+          })  
+    })}
+
+  componentDidMount(){
+    firebaseApp.auth().onAuthStateChanged( (user)=>{
+      console.log("Inside auth state change", user);
+        this.setState({
+          isAuth: user ? true : false,
+          user : user ? user.uid : null
         })
-      }
     })
   }
 
@@ -74,13 +84,13 @@ class App extends Component {
           </Route>
 
           <Route path="/signup" exact>
-          { isAuth ? ( <Redirect to="/"></Redirect> ) : (<SignUp></SignUp>) }
+          { isAuth ? ( <Redirect to="/"></Redirect> ) : (<SignUp signUp={this.signUp}></SignUp>) }
           </Route>
 
           <Route path="/signin" exact>
           { isAuth ? ( <Redirect to="/"></Redirect> ) : (<SignIn login={this.login} ></SignIn>) }
           </Route>
-          </Switch> p
+          </Switch>
         </div>
       </Router>
     );
